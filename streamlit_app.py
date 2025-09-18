@@ -42,7 +42,7 @@ if st.button("Find Matching Colleges"):
                 "min_gpa": row.get("minimum_gpa", 0.0),
                 "requirements": ["transcript", "essay"]  # Replace with realistic requirements if available in CSV
             }
-            colleges.append(college)
+          colleges.append(college)
 
         # Use matching function
         matched_colleges = match_colleges(student, colleges)
