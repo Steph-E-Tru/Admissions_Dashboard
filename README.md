@@ -74,11 +74,11 @@ Admissions_Dashboard/
 
 ├── tests/                    # Sanity tests
 
-├── test_student_profile.py
+│   ├── test_student_profile.py
 
-├── test_college_matching.py
+│   ├── test_college_matching.py
 
-└── test_application_checklist.py
+└── └── test_application_checklist.py
 
 
 🙏 Acknowledgments
