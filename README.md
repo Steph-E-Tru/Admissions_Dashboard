@@ -39,7 +39,7 @@ Launch the Streamlit dashboard:
 
 ```bash
 streamlit run streamlit_app.py
-                    
+```                    
 Visit the URL displayed in your terminal to interact with the app in your browser.
 
 💡 Usage Examples
