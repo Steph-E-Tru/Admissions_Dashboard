@@ -78,8 +78,9 @@ Admissions_Dashboard/
 
 │   ├── test_college_matching.py
 
-└── └── test_application_checklist.py
+│   └── test_application_checklist.py
 
+└──
 
 🙏 Acknowledgments
 
