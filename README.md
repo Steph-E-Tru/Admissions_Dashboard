@@ -31,7 +31,7 @@ Clone the repository and install dependencies.
 ```bash
 git clone https://github.com/Steph-E-Tru/Admissions_Dashboard
 cd Admissions_Dashboard
-pip install -r requirements.txt
+pip install -r requirements.txt```
                     
 🚀 Quickstart
 
