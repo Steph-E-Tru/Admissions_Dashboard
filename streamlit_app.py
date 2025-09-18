@@ -33,7 +33,7 @@ if st.button("Find Matching Colleges"):
           if "application_requirements" in df.columns and pd.notna(row["application_requirements"]):
                 # Split on commas if requirements are stored as a single string
                 requirements = [req.strip() for req in str(row["application_requirements"]).split(",")]
-            else:
+          else:
                 requirements = []  
           
           college = {
