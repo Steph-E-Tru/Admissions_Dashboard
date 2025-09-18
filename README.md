@@ -51,16 +51,27 @@ Visit the URL displayed in your terminal to interact with the app in your browse
 📁 Project Structure
 
 Admissions_Dashboard/
+
 │
+
 ├── streamlit_app.py          # The Streamlit interface
+
 ├── src/
+
 │   ├── student_profile.py    # Profile creation code
+
 │   ├── college_matching.py   # Matching code
+
 │   └── application_checklist.py # Checklist code
+
 ├── requirements.txt          # Dependencies
+
 ├── README.md                 # This documentation
+
 ├── data/
+
 │   └── colleges_dataset.csv   # College/program data
+
 └── tests/                    # Sanity tests (optional)
 
 🙏 Acknowledgments
