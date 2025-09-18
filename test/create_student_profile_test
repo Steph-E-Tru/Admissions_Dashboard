@@ -1,0 +1,6 @@
+# Sanity Check 1 for create_student_profile
+student = create_student_profile("Alex Lee", 3.7, ["engineering", "biology"])
+assert isinstance(student, dict)
+assert student["name"] == "Alex Lee"
+assert student["gpa"] == 3.7
+print("✅ create_student_profile works! Output:", student)
