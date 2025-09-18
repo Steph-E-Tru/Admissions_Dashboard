@@ -72,7 +72,15 @@ Admissions_Dashboard/
 
 │   └── colleges_dataset.csv   # College/program data
 
-└── tests/                    # Sanity tests (optional)
+├── tests/                    # Sanity tests
+
+│   ├── student_profile.py    
+
+│   ├── college_matching.py   
+
+│   └── application_checklist.py 
+  
+└──
 
 🙏 Acknowledgments
 
