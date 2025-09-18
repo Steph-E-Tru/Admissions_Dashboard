@@ -1,0 +1,19 @@
+# Sanity Check 2 for match_colleges
+
+# Dummy test data (tiny)
+colleges = [
+    {"name": "Tech U", "majors": ["Engineering", "Mathematics"], "min_gpa": 3.0, "requirements": ["transcript", "personal essay", "SAT/ACT scores", "teacher recommendation"]},
+    {"name": "Science College", "majors": ["Biology", "Chemistry"], "min_gpa": 3.5, "requirements": ["transcript", "personal essay", "SAT/ACT scores", "science teacher recommendation", "resume"]},
+    {"name": "Arts Institute", "majors": ["History", "Art"], "min_gpa": 2.5, "requirements": ["transcript", "portfolio (for art majors)", "personal statement"]}
+]
+
+student = create_student_profile("Alex Lee", 3.7, ["engineering", "BIOLOGY"])
+matched = match_colleges(student, colleges)
+
+# Assert that 2 colleges should be matched, and the correct colleges are matched
+assert len(matched) == 2  # Tech U and Science College
+expected_names = {"Tech U", "Science College"}
+matched_names = {c["name"] for c in matched} # Extract names from matched colleges
+assert matched_names == expected_names
+
+print("✅ match_colleges works! Matched:", [c["name"] for c in matched])
