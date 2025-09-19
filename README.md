@@ -47,6 +47,8 @@ Visit the URL displayed in your terminal to interact with the app in your browse
 - Enter student information and select interests (majors).
 - Hit the “Find Matching Colleges” button to instantly see colleges that fit your profile.
 - Review the requirements checklist for each college, displayed in an easy-to-read format.
+<img width="1003" height="661" alt="image" src="https://github.com/user-attachments/assets/d4d28fa6-be0a-4576-97d5-0e89a63e5e20" />
+
                     
 📁 Project Structure
 
