@@ -4,11 +4,10 @@ import pandas as pd
 # Import your functions from the src/ folder
 from src.student_profile import create_student_profile
 from src.college_matching import match_colleges
-# from src.application_checklist import get_college_checklist # Not needed with new logic
 
 st.title("College Admissions Dashboard")
 
-# Load your dataset (adjust the path if needed)
+# Load your dataset
 df = pd.read_csv("data/colleges_dataset.csv")
 
 # Extract available majors from the dataset for user selection
@@ -24,10 +23,9 @@ act = st.number_input("ACT Score", min_value=1, max_value=36)
 location_important = st.checkbox("Is location/proximity to home important?")
 desired_states = []
 if location_important:
-    us_states = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY', 'DC', 'PR', 'VI']  # Full list of states
+    us_states = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY', 'DC', 'PR', 'VI']
     desired_states = st.multiselect("Select preferred states", us_states)
 
-# Find Matching Colleges
 if st.button("Find Matching Colleges"):
     if not name or not interests:
         st.error("Please enter a name and select at least one interest.")
@@ -41,15 +39,18 @@ if st.button("Find Matching Colleges"):
         # Build a list of colleges for matching (from CSV)
         colleges = df.to_dict(orient="records")
 
+        # DEBUG: Show sample college dict
+        # st.write("Sample college record:", colleges[0])
+
         matched_colleges = match_colleges(student, colleges)
         if matched_colleges:
             st.success(f"Found {len(matched_colleges)} matching colleges for {name}")
             for college in matched_colleges:
-                # Display college name
-                display_name = college.get("college_name", str(college.get("college_name", "Unknown College")))
+                # Use college_name for display
+                display_name = college.get("college_name", str(college.get("college_id", "Unknown College")))
                 st.subheader(display_name)
 
-                college_key = str(college.get("college_name", display_name))
+                college_key = str(college.get("college_id", display_name))
 
                 # Split requirements from application_requirements column
                 requirements = [req.strip() for req in college.get("application_requirements", "").split(",") if req.strip()]
