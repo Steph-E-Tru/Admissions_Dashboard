@@ -22,15 +22,18 @@ def match_colleges(student: dict, colleges: list) -> list:
     for col in colleges:
         # Major match
         college_major = col.get("program_type", "").lower().strip()
-        if not any(interest == college_major for interest in student_interests):
+        if not any(interest in college_major or college_major in interest for interest in student_interests):
             continue
             
         # Degree match
+        degree_level_val = col.get("degree_level", "")
         try:
-            degrees = ast.literal_eval(col.get("degree_level", "[]"))
-            college_degrees = [d.lower().strip() for d in degrees]
+            degrees = ast.literal_eval(degree_level_val)
+            if not isinstance(degrees, list):
+                degrees = [str(degrees)]
         except Exception:
-            college_degrees = []
+            degrees = [degree_level_val]
+        college_degrees = [d.lower().strip() for d in degrees if d]
         if student_degree not in college_degrees:
             continue
         
