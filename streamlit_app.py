@@ -25,6 +25,13 @@ if "favorites" not in st.session_state:
     st.session_state["favorites"] = set()
 
 if page == "Profile & Search":
+    st.image("https://cdn-icons-png.flaticon.com/512/2917/2917996.png", width=80)  # Example graduation cap icon
+    st.markdown(
+        "<h1 style='text-align: center; color: #2E86C1;'>Create Student Profile & Find Colleges</h1>",
+        unsafe_allow_html=True
+    )
+    st.write("Fill out your profile and discover colleges that match your interests and academic background!")
+    
     st.header("Create Student Profile & Find Colleges")
     name = st.text_input("Enter your name:")
     gpa = st.number_input("Enter your GPA (Unweighted):", min_value=0.0, max_value=4.0, step=0.01)
