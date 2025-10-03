@@ -37,7 +37,7 @@ if st.button("Find Matching Colleges"):
         # Create student profile
         student = create_student_profile(
             name, gpa, interests, degree_level,
-            {"SAT": sat, "ACT": act}
+            {"SAT": sat, "ACT": act}, False, []
         )
         colleges = df.to_dict(orient="records")
         st.session_state["student"] = student
