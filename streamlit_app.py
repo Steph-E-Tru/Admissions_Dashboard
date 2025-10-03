@@ -40,7 +40,7 @@ if page == "Profile & Search":
     if st.session_state["matched_colleges"]:
         college_df = pd.DataFrame(st.session_state["matched_colleges"])
         cols_to_show = ["college_name", "rank", "cost", "application_fee", "application_deadline", "state_location", "minimum_gpa", "minimum_sat", "minimum_act", "degree_level"]  
-        st.dataframe(college_df[cols_to_show])
+        st.dataframe(college_df)
         st.metric(label="Matched Colleges", value=len(college_df))
         if "cost" in college_df.columns:
             st.metric(label="Average Cost", value=f"${college_df['cost'].mean():,.0f}")
@@ -72,7 +72,7 @@ if page == "Profile & Search":
             styled_df = college_df.style.background_gradient(subset=["cost"], cmap="Greens")
             st.dataframe(styled_df)
         else:
-            st.dataframe(college_df[cols_to_show])
+            st.dataframe(college_df)
 
         st.write("Select colleges you are interested in:")
         for college in matched_colleges:
