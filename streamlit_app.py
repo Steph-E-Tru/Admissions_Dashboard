@@ -49,6 +49,12 @@ if st.button("Find Matching Colleges"):
         st.session_state["colleges"] = colleges
         st.session_state["matched_colleges"] = match_colleges(student, colleges)
 
+        # Reset completed requirements for all newly matched colleges
+        if st.session_state["matched_colleges"]:
+            for college in st.session_state["matched_colleges"]:
+                college_key = str(college.get("college_id", college.get("college_name", "")))
+                st.session_state[college_key] = set()
+
 student = st.session_state["student"]
 colleges = st.session_state["colleges"]
 matched_colleges = st.session_state["matched_colleges"]
