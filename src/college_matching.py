@@ -2,58 +2,56 @@
 import ast
 
 def match_colleges(student: dict, colleges: list) -> list:
-    """ 
+    """
     Match colleges to student profile based on interests, GPA, degree level, test scores, and location preferences.
     Args:
         student: Student profile (dict)
-        colleges: List of college dicts with 'majors', 'min_gpa', 'degree_level', 'min_test_scores', 'states'
+        colleges: List of college dicts from CSV
     Returns:
         List of matched college dicts
     """
     matches = []
 
-    # Convert all student interests to lowercase once to avoid issues with case-sensitivity
-    student_interests = [interest.lower() for interest in student["interests"]]
-    student_degree = student.get("degree_level", "").lower()
+    # Lowercase interests for matching
+    student_interests = [interest.lower().strip() for interest in student.get("interests", [])]
+    student_degree = student.get("degree_level", "").lower().strip()
     student_scores = student.get("test_scores", {})
     location_important = student.get("location_important", False)
-    desired_states = student.get("desired_states", [])
+    desired_states = [state.upper().strip() for state in student.get("desired_states", [])]
 
     for col in colleges:
-        # Major match
-        college_major = col.get("program_type", "").lower().strip()
+        # Major match: substring, not exact
+        college_major = str(col.get("program_type", "")).lower().strip()
         if not any(interest in college_major or college_major in interest for interest in student_interests):
             continue
-            
-        # Degree match
+
+        # Degree match: handle both list and string
         degree_level_val = col.get("degree_level", "")
         try:
-            degrees = ast.literal_eval(degree_level_val)
-            if not isinstance(degrees, list):
-                degrees = [str(degrees)]
+            degrees = ast.literal_eval(degree_level_val) if degree_level_val.startswith("[") else [degree_level_val]
         except Exception:
             degrees = [degree_level_val]
-        college_degrees = [d.lower().strip() for d in degrees if d]
-        if student_degree not in college_degrees:
+        college_degrees = [str(d).lower().strip() for d in degrees if str(d).strip()]
+        if student_degree and student_degree not in college_degrees:
             continue
-        
+
         # Minimum GPA
         try:
             min_gpa = float(col.get("minimum_gpa") or 0.0)
         except (ValueError, TypeError):
             min_gpa = 0.0
-        if student["gpa"] < min_gpa:
+        if student.get("gpa", 0.0) < min_gpa:
             continue
-        
+
         # Location match
         if location_important:
-            col_state = col.get("state_location", "").upper().strip()
-            if col_state not in desired_states:
+            col_state = str(col.get("state_location", "")).upper().strip()
+            if col_state and col_state not in desired_states:
                 continue
-        
-        # Academic fit
+
+        # Academic fit (for display only)
         advice = ""
-        fit_count = 1  # Only GPA is required
+        fit_count = 1  # GPA is always checked
         fit_list = ["GPA"]
         try:
             min_sat = float(col.get("minimum_sat")) if col.get("minimum_sat") not in ["", None] else None
