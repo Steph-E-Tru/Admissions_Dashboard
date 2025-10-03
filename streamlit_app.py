@@ -44,10 +44,10 @@ if st.button("Find Matching Colleges"):
         if matched_colleges:
             st.success(f"Found {len(matched_colleges)} matching colleges for {name}")
             for college in matched_colleges:
-                st.subheader(college.get("name", "Unknown College"))
+                st.subheader(college.get("college_name", "Unknown College"))
                 # Track completion, e.g. in session state or reload per user
                 requirements = get_college_checklist(college)
-                college_key = str(college["college_id"])
+                college_key = str(college["college_name"])
                 completed_set = st.session_state.get(college_key, set())
                 checklist = get_college_checklist(college, completed_set)
                 for req in checklist:
