@@ -26,6 +26,11 @@ if location_important:
     us_states = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY', 'DC', 'PR', 'VI']
     desired_states = st.multiselect("Select preferred states", us_states)
 
+# Persist data between reruns:
+if "student" not in st.session_state:
+    st.session_state["student"] = None
+if "colleges" not in st.session_state:
+    st.session_state["colleges"] = None
 if "matched_colleges" not in st.session_state:
     st.session_state["matched_colleges"] = None
 
@@ -38,12 +43,14 @@ if st.button("Find Matching Colleges"):
             name, gpa, interests, degree_level,
             {"SAT": sat, "ACT": act}, location_important, desired_states
         )
-
-        # Build a list of colleges for matching (from CSV)
         colleges = df.to_dict(orient="records")
+        st.session_state["student"] = student
+        st.session_state["colleges"] = colleges
         st.session_state["matched_colleges"] = match_colleges(student, colleges)
 
-matched_colleges = match_colleges(student, colleges)
+student = st.session_state["student"]
+colleges = st.session_state["colleges"]
+matched_colleges = st.session_state["matched_colleges"]
 
 if matched_colleges:
     st.success(f"Found {len(matched_colleges)} matching colleges for {name}")
