@@ -19,13 +19,13 @@ def match_colleges(student: dict, colleges: list) -> list:
 
     for col in colleges:
         # Convert each college's majors and degrees to lowercase
-        college_majors = [major.lower() for major in col["majors"]]
+        college_majors = [major.lower() for major in col["program_type"]]
         college_degrees = [deg.lower() for deg in col.get("degree_level", [])]
 
         # Match interests, gpa, and degree level
         if not any(interest in college_majors for interest in student_interests):
             continue
-        if student["gpa"] < col.get("min_gpa", 0.0):
+        if student["gpa"] < col.get("minimum_gpa", 0.0):
             continue
         if student_degree not in college_degrees:
             continue
