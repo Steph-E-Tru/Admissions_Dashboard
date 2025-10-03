@@ -30,19 +30,33 @@ def match_colleges(student: dict, colleges: list) -> list:
         if student_degree not in college_degrees:
             continue
 
-        # Standardized test score filter (if applicable)
-        min_scores = col.get("min_test_scores", {})
-        test_score_ok = True
-        for test, min_val in min_scores.items():
-            # if student didn't take a required test or scores are too low, skip
-            if test in student_scores and student_scores[test] < min_val:
-                test_score_ok = False
-                break
-            elif test not in student_scores and min_val is not None:
-                test_score_ok = False
-                break
-        if not test_score_ok:
-            continue
+         # SAT/ACT logic (suggested, not required)
+        min_sat = col.get("minimum_sat", None)
+        min_act = col.get("minimum_act", None)
+        sat_score = student_scores.get("SAT", None)
+        act_score = student_scores.get("ACT", None)
+        fit_criteria = []
+
+        # GPA always met (since filtered)
+        fit_criteria.append("GPA")
+
+        if min_sat is not None and sat_score is not None and sat_score >= min_sat:
+            fit_criteria.append("SAT")
+        if min_act is not None and act_score is not None and act_score >= min_act:
+            fit_criteria.append("ACT")
+
+        summary = f"Academic fit: {len(fit_criteria)}/3 thresholds met ({', '.join(fit_criteria)})"
+        advice = ""
+        # If SAT/ACT are present but not met, add supportive advice
+        if min_sat is not None and (sat_score is None or sat_score < min_sat):
+            advice += "Your SAT score is below suggestions, but this is not a strict requirement. "
+        if min_act is not None and (act_score is None or act_score < min_act):
+            advice += "Your ACT score is below suggestions, but this is not a strict requirement. "
+
+        match = dict(col)  # All college data
+        match["academic_fit_summary"] = summary
+        if advice:
+            match["academic_fit_advice"] = advice.strip()
 
         # Location filter if important
         if location_important:
