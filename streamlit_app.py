@@ -38,9 +38,9 @@ if page == "Profile & Search":
 
     # Key stats with st.metric
     if st.session_state["matched_colleges"]:
-    college_df = pd.DataFrame(st.session_state["matched_colleges"])
-    cols_to_show = ["college_name", "rank", "cost", "application_fee", "application_deadline", "state_location", "minimum_gpa", "minimum_sat", "minimum_act", "degree_level"]  
-    st.dataframe(college_df[cols_to_show])
+        college_df = pd.DataFrame(st.session_state["matched_colleges"])
+        cols_to_show = ["college_name", "rank", "cost", "application_fee", "application_deadline", "state_location", "minimum_gpa", "minimum_sat", "minimum_act", "degree_level"]  
+        st.dataframe(college_df[cols_to_show])
         st.metric(label="Matched Colleges", value=len(college_df))
         if "cost" in college_df.columns:
             st.metric(label="Average Cost", value=f"${college_df['cost'].mean():,.0f}")
