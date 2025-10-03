@@ -46,8 +46,14 @@ if st.button("Find Matching Colleges"):
             for college in matched_colleges:
                 st.subheader(college.get("college_name", "Unknown College"))
                 # Track completion, e.g. in session state or reload per user
-                requirements = get_college_checklist(college)
                 college_key = str(college["college_name"])
+                requirements = [req.strip() for req in college.get("application_requirements", "").split(",") if req.strip()]
+                if requirements:
+                    st.write("Application Requirements Checklist:")
+                    for req in requirements:
+                        checked = st.checkbox(req, key=college_key + req)
+                else:
+                    st.write("No requirements listed for this college.")
                 completed_set = st.session_state.get(college_key, set())
                 checklist = get_college_checklist(college, completed_set)
                 for req in checklist:
