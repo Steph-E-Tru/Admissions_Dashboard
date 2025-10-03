@@ -38,7 +38,7 @@ if st.button("Find Matching Colleges"):
         )
 
         # Build a list of colleges for matching (simulate college records from CSV)
-        colleges = []
+        colleges = df.to_dict(orient="records")
         
         matched_colleges = match_colleges(student, colleges)
         if matched_colleges:
