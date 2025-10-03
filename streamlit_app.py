@@ -49,7 +49,7 @@ if st.button("Find Matching Colleges"):
                 display_name = college.get("college_name", str(college.get("college_name", "Unknown College")))
                 st.subheader(display_name)
 
-                college_key = str(college.get("college_id", display_name))
+                college_key = str(college.get("college_name", display_name))
 
                 # Split requirements from application_requirements column
                 requirements = [req.strip() for req in college.get("application_requirements", "").split(",") if req.strip()]
