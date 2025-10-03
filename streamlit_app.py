@@ -46,7 +46,7 @@ if st.button("Find Matching Colleges"):
             st.success(f"Found {len(matched_colleges)} matching colleges for {name}")
             for college in matched_colleges:
                 # Display college name
-                display_name = college.get("college_name", str(college.get("college_id", "Unknown College")))
+                display_name = college.get("college_name", str(college.get("college_name", "Unknown College")))
                 st.subheader(display_name)
 
                 college_key = str(college.get("college_id", display_name))
