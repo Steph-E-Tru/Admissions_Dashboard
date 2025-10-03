@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import matplotlib
+pip install matplotlib
 
 from src.student_profile import create_student_profile
 from src.college_matching import match_colleges
