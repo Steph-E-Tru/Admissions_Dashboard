@@ -73,10 +73,6 @@ if page == "Profile & Search":
             st.dataframe(styled_df)
         else:
             st.dataframe(college_df)
-        # Bar chart of degree levels (NEW)
-        if "degree_level" in college_df.columns:
-            degree_counts = college_df["degree_level"].value_counts()
-            st.bar_chart(degree_counts)
 
         st.write("Select colleges you are interested in:")
         for college in matched_colleges:
