@@ -6,7 +6,7 @@ def create_student_profile(name: str, gpa: float, interests: list, degree_level:
         name: Student's name (string)
         gpa: Student's GPA (float)
         interests: List of subjects/majors (list of str)
-        degree_level: Degree being sought (e.g., 'undergraduate', 'bachelor', 'associate')
+        degree_level: Degree being sought (e.g., 'undergraduate', 'bachelor', 'associate', 'PhD')
         test_scores: Dictionary of standardized test scores (e.g., {'SAT': 1490, 'ACT': 32, ...})
         location_important: Is location/proximity to home important? (True/False)
         desired_states: List of preferred states, if location is important (list of str)
