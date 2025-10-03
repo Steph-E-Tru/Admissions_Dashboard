@@ -26,6 +26,9 @@ if location_important:
     us_states = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY', 'DC', 'PR', 'VI']
     desired_states = st.multiselect("Select preferred states", us_states)
 
+if "matched_colleges" not in st.session_state:
+    st.session_state["matched_colleges"] = None
+
 if st.button("Find Matching Colleges"):
     if not name or not interests:
         st.error("Please enter a name and select at least one interest.")
@@ -38,45 +41,44 @@ if st.button("Find Matching Colleges"):
 
         # Build a list of colleges for matching (from CSV)
         colleges = df.to_dict(orient="records")
+        st.session_state["matched_colleges"] = match_colleges(student, colleges)
 
-        # DEBUG: Show sample college dict
-        # st.write("Sample college record:", colleges[0])
+matched_colleges = match_colleges(student, colleges)
 
-        matched_colleges = match_colleges(student, colleges)
-        if matched_colleges:
-            st.success(f"Found {len(matched_colleges)} matching colleges for {name}")
-            for college in matched_colleges:
-                # Use college_name for display
-                display_name = college.get("college_name", str(college.get("college_id", "Unknown College")))
-                st.subheader(display_name)
+if matched_colleges:
+    st.success(f"Found {len(matched_colleges)} matching colleges for {name}")
+    for college in matched_colleges:
+        # Use college_name for display
+        display_name = college.get("college_name", str(college.get("college_id", "Unknown College")))
+        st.subheader(display_name)
 
-                college_key = str(college.get("college_id", display_name))
+        college_key = str(college.get("college_id", display_name))
 
-                # Split requirements from application_requirements column
-                requirements = [req.strip() for req in college.get("application_requirements", "").split(",") if req.strip()]
+        # Split requirements from application_requirements column
+        requirements = [req.strip() for req in college.get("application_requirements", "").split(",") if req.strip()]
 
-                if requirements:
-                    st.write("Application Requirements Checklist:")
+        if requirements:
+            st.write("Application Requirements Checklist:")
 
-                    # Initialize completed set in session_state if not already present
-                    if college_key not in st.session_state:
-                        st.session_state[college_key] = set()
+            # Initialize completed set in session_state if not already present
+            if college_key not in st.session_state:
+                st.session_state[college_key] = set()
 
-                    completed_set = st.session_state[college_key]
+            completed_set = st.session_state[college_key]
 
-                    # Display checkboxes and update session_state
-                    for req in requirements:
-                        checked = st.checkbox(req, key=college_key + req, value=req in completed_set)
-                        if checked:
-                            completed_set.add(req)
-                        else:
-                            completed_set.discard(req)
-                    st.session_state[college_key] = completed_set
-
-                    # Optional: show progress summary
-                    st.write(f"Completed {len(completed_set)}/{len(requirements)} requirements.")
-
+            # Display checkboxes and update session_state
+            for req in requirements:
+                checked = st.checkbox(req, key=college_key + req, value=req in completed_set)
+                if checked:
+                    completed_set.add(req)
                 else:
-                    st.write("No requirements listed for this college.")
+                    completed_set.discard(req)
+            st.session_state[college_key] = completed_set
+
+            # Optional: show progress summary
+            st.write(f"Completed {len(completed_set)}/{len(requirements)} requirements.")
+
         else:
-            st.warning("No colleges matched your criteria.")
+            st.write("No requirements listed for this college.")
+    else:
+        st.warning("No colleges matched your criteria.")
