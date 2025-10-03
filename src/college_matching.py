@@ -4,7 +4,7 @@ def match_colleges(student: dict, colleges: list) -> list:
     Match colleges to student profile based on interests, GPA, degree level, test scores, and location preferences.
     Args:
         student: Student profile (dict)
-        colleges: List of college dicts with 'majors', 'min_gpa', 'degree_levels', 'min_test_scores', 'states'
+        colleges: List of college dicts with 'majors', 'min_gpa', 'degree_level', 'min_test_scores', 'states'
     Returns:
         List of matched college dicts
     """
@@ -20,7 +20,7 @@ def match_colleges(student: dict, colleges: list) -> list:
     for col in colleges:
         # Convert each college's majors and degrees to lowercase
         college_majors = [major.lower() for major in col["majors"]]
-        college_degrees = [deg.lower() for deg in col.get("degree_levels", [])]
+        college_degrees = [deg.lower() for deg in col.get("degree_level", [])]
 
         # Match interests, gpa, and degree level
         if not any(interest in college_majors for interest in student_interests):
