@@ -9,12 +9,7 @@ from src.application_checklist import get_college_checklist
 df = pd.read_csv("data/colleges_dataset.csv")
 all_majors = sorted(df['program_type'].dropna().unique())
 
-# Sidebar with Profile Summary (NEW)
-st.sidebar.header("Your Profile")
-if "student" in st.session_state and st.session_state["student"]:
-    st.sidebar.write(st.session_state["student"])
-
-# Easiest multipage: sidebar navigation (NEW)
+# Easiest multipage: sidebar navigation
 page = st.sidebar.selectbox("Navigate", ["Profile & Search", "My Colleges & Checklist"])
 
 # Persist data between reruns:
