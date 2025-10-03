@@ -21,11 +21,6 @@ interests = st.multiselect("Select your areas of interest (majors):", all_majors
 degree_level = st.selectbox("Degree Level", ["Associates", "Bachelors", "Masters", "PhD"])
 sat = st.number_input("SAT Score", min_value=400, max_value=1600)
 act = st.number_input("ACT Score", min_value=1, max_value=36)
-location_important = st.checkbox("Is location/proximity to home important?")
-desired_states = []
-if location_important:
-    us_states = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY', 'DC', 'PR', 'VI']
-    desired_states = st.multiselect("Select preferred states", us_states)
 
 # Persist data between reruns:
 if "student" not in st.session_state:
