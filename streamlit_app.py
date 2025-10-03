@@ -25,11 +25,7 @@ if "favorites" not in st.session_state:
     st.session_state["favorites"] = set()
 
 if page == "Profile & Search":
-    st.image("https://images.squarespace-cdn.com/content/v1/5fc463b9df132613bbd422a5/1607559213633-RU0GHLJ43QYEE3VKV5K6/Graduations+Now+Blog+Different+Types+of+High+School+Graduation+Hats.jpg", width=80)  # Example graduation cap icon
-    st.markdown(
-        "<h1 style='text-align: center; color: #2E86C1;'>Create Student Profile & Find Colleges</h1>",
-        unsafe_allow_html=True
-    )
+    st.image("https://images.squarespace-cdn.com/content/v1/5fc463b9df132613bbd422a5/1607559213633-RU0GHLJ43QYEE3VKV5K6/Graduations+Now+Blog+Different+Types+of+High+School+Graduation+Hats.jpg", width=100)  # Example graduation cap icon
     st.write("Fill out your profile and discover colleges that match your interests and academic background!")
     
     st.header("Create Student Profile & Find Colleges")
