@@ -13,12 +13,6 @@ df = pd.read_csv("data/colleges_dataset.csv")
 # Extract available majors from the dataset for user selection
 all_majors = sorted(df['program_type'].dropna().unique())
 
-# DEBUG: Print majors and a sample college row
-st.write("Majors used in multiselect:", all_majors)
-st.write("Sample college record (row 0):", df.iloc[0].to_dict())
-st.write("First 5 college records:")
-st.write(df.head().to_dict(orient="records"))
-
 # User input widgets
 name = st.text_input("Enter your name:")
 gpa = st.number_input("Enter your GPA (Unweighted):", min_value=0.0, max_value=4.0, step=0.01)
