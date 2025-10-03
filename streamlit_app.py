@@ -4,6 +4,7 @@ import pandas as pd
 # Import your functions from the src/ folder
 from src.student_profile import create_student_profile
 from src.college_matching import match_colleges
+from src.application_checklist import get_college_checklist
 
 st.title("College Admissions Dashboard")
 
@@ -63,28 +64,25 @@ if matched_colleges:
 
         # Split requirements from application_requirements column
         requirements = [req.strip() for req in college.get("application_requirements", "").split(",") if req.strip()]
+        college_for_checklist = dict(college)
+        college_for_checklist["requirements"] = requirements
 
-        if requirements:
+        # Initialize completed set in session_state if not already present
+        if college_key not in st.session_state:
+            st.session_state[college_key] = set()
+        completed_set = st.session_state[college_key]
+
+        checklist = get_college_checklist(college_for_checklist, completed_set)
+        if checklist:
             st.write("Application Requirements Checklist:")
-
-            # Initialize completed set in session_state if not already present
-            if college_key not in st.session_state:
-                st.session_state[college_key] = set()
-
-            completed_set = st.session_state[college_key]
-
-            # Display checkboxes and update session_state
-            for req in requirements:
-                checked = st.checkbox(req, key=college_key + req, value=req in completed_set)
+            for item in checklist:
+                checked = st.checkbox(item["requirement"], key=college_key + item["requirement"], value=item["completed"])
                 if checked:
-                    completed_set.add(req)
+                    completed_set.add(item["requirement"])
                 else:
-                    completed_set.discard(req)
+                    completed_set.discard(item["requirement"])
             st.session_state[college_key] = completed_set
-
-            # Optional: show progress summary
-            st.write(f"Completed {len(completed_set)}/{len(requirements)} requirements.")
-
+            st.write(f"Completed {len(completed_set)}/{len(checklist)} requirements.")
         else:
             st.write("No requirements listed for this college.")
     else:
